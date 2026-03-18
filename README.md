@@ -1,55 +1,36 @@
-# Dance Web Proj
-> **A ponte digital entre o palco e o código.** > Plataforma comunitária para centralizar o ecossistema da dança, focada em eventos e gestão de carreiras freelance.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
----
+## Getting Started
 
-## 🚀 Visão Geral
-Este projeto nasce da intersecção entre a **Dança** e a **Engenharia Informática**. O objetivo é resolver a fragmentação de informação no setor, permitindo que artistas geritem o seu portfólio e localização, enquanto promotores encontram talento de forma eficiente.
+First, run the development server:
 
----
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## 🛠️ Funcionalidades (MVP)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### 📅 1. Aba de Eventos
-* **Feed Dinâmico:** Listagem de espetáculos, audições, workshops e jams.
-* **Filtros por Região:** Visualização rápida de eventos em Lisboa, Porto, etc.
-* **Categorias:** Filtro por estilo (Contemporâneo, Urban, Jazz, Ballet, etc.).
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### 👤 2. Aba de Perfil (Área do Artista)
-* **Bio & Portfólio:** Galeria de imagens e links de vídeo (YouTube/Vimeo).
-* **CV Digital:** Histórico profissional e formação.
-* **Dashboard:** Gestão de dados pessoais e visibilidade do perfil.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### 🎓 3. Aba de Artistas & Workshops
-* **Diretório de Freelance:** Lista de artistas disponíveis para contratação.
-* **Tabela de Preços:** Valores transparentes por hora ou por workshop.
-* **Geolocalização Ativa:** Campo de "Localização Atual" para otimização de logística e deslocações.
+## Learn More
 
----
+To learn more about Next.js, take a look at the following resources:
 
-## 🏗️ Stack Tecnológica (Sugerida)
-* **Frontend:** [Next.js](https://nextjs.org/) (React) + [Tailwind CSS](https://tailwindcss.com/)
-* **Backend/Auth:** [Supabase](https://supabase.com/) (PostgreSQL + Auth + Storage)
-* **Mapas:** [Leaflet](https://leafletjs.com/) ou Mapbox para localização.
-* **Deployment:** [Vercel](https://vercel.com/)
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
----
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## 📝 Roadmap de Desenvolvimento
+## Deploy on Vercel
 
-- [ ] **Fase 1:** Setup do repositório e Schema da Base de Dados.
-- [ ] **Fase 2:** Implementação do sistema de Autenticação (Login/Registo).
-- [ ] **Fase 3:** Criação do CRUD de Eventos.
-- [ ] **Fase 4:** Desenvolvimento dos Perfis e upload de media.
-- [ ] **Fase 5:** Filtros de localização e preços para Workshops.
-- [ ] **Fase 6:** Lançamento Beta para a comunidade.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
----
-
-## 💡 Notas de Engenharia
-* **Mobile First:** Essencial para bailarinos que consultam o site entre ensaios.
-* **Performance:** Otimização de imagens de portfólio para carregamento rápido.
-* **SEO:** Tags dinâmicas para que os perfis dos artistas apareçam no Google.
-
----
-*Criado por um Bailarino & Engenheiro para a comunidade.*
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
