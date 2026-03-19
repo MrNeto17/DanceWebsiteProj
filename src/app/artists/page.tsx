@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import supabase from '../../lib/supabase';
+import { DISTRITOS_PORTUGAL } from '../../lib/constants';
 
 export default function Page() {
   const [artistas, setArtistas] = useState<any[]>([]);
@@ -34,16 +35,16 @@ export default function Page() {
           <h1 className="text-5xl font-black text-indigo-900 mb-4 tracking-tight">COMUNIDADE</h1>
           <p className="text-gray-500 text-lg">Encontra os melhores talentos para o teu próximo workshop.</p>
 
-          <div className="flex justify-center gap-4 mt-8">
-            {['Todos', 'Lisboa', 'Porto'].map((city) => (
+          <div className="flex flex-wrap justify-center gap-2 mt-8">
+            {['Todos', ...DISTRITOS_PORTUGAL].map((district) => (
               <button
-                key={city}
-                onClick={() => setFiltro(city)}
-                className={`px-6 py-2 rounded-full font-semibold transition-all ${
-                  filtro === city ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'
+                key={district}
+                onClick={() => setFiltro(district)}
+                className={`px-4 py-1.5 rounded-full font-semibold text-sm transition-all ${
+                  filtro === district ? 'bg-indigo-600 text-white shadow-lg' : 'bg-white text-gray-600 hover:bg-gray-100'
                 }`}
               >
-                {city}
+                {district}
               </button>
             ))}
           </div>

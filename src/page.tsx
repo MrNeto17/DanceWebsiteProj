@@ -145,13 +145,13 @@ export default function LandingPage() {
               Pronto para entrar?
             </h2>
             <p className="text-gray-400 mb-8 text-lg">
-              Regista-te grátis e começa a construir o teu nome na cena.
+              Regista-te gratis e começa a construir o teu nome na cena.
             </p>
             <Link
               href="/register"
               className="inline-block bg-indigo-600 hover:bg-indigo-500 text-white px-10 py-4 rounded-2xl font-black text-xl transition-all"
             >
-              Criar Conta Grátis
+              Criar Contaa Grátis
             </Link>
           </div>
         </div>

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import supabase from '../../../lib/supabase';
+import { DISTRITOS_PORTUGAL } from '../../../lib/constants';
 import Link from 'next/link';
 
 export default function EditProfilePage() {
@@ -195,12 +196,9 @@ export default function EditProfilePage() {
                 onChange={handleChange}
                 className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black"
               >
-                <option value="Lisboa">Lisboa</option>
-                <option value="Porto">Porto</option>
-                <option value="Coimbra">Coimbra</option>
-                <option value="Braga">Braga</option>
-                <option value="Faro">Faro</option>
-                <option value="Outro">Outro</option>
+                {DISTRITOS_PORTUGAL.map(d => (
+                  <option key={d} value={d}>{d}</option>
+                ))}
               </select>
             </div>
 

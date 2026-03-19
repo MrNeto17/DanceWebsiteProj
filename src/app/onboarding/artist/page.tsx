@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import supabase from '../../../lib/supabase';
+import { DISTRITOS_PORTUGAL } from '../../../lib/constants';
 
 export default function ArtistOnboarding() {
   const router = useRouter();
@@ -19,9 +20,7 @@ export default function ArtistOnboarding() {
 
   async function checkUser() {
     const { data: { user } } = await supabase.auth.getUser();
-    if (!user) {
-      router.push('/login');
-    }
+    if (!user) router.push('/login');
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -31,45 +30,39 @@ export default function ArtistOnboarding() {
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Sem user");
+      if (!user) throw new Error('Sem user');
 
       let avatarUrl = '';
 
       if (file) {
         const fileExt = file.name.split('.').pop();
         const filePath = `${user.id}/avatar-${Date.now()}.${fileExt}`;
-
         const { error: uploadError } = await supabase.storage
           .from('avatars')
           .upload(filePath, file);
-
         if (uploadError) throw uploadError;
-
         const { data: { publicUrl } } = supabase.storage
           .from('avatars')
           .getPublicUrl(filePath);
-        
         avatarUrl = publicUrl;
       }
 
-      // Criar perfil de artista
       const { error: profileError } = await supabase
         .from('profiles')
-        .upsert({ 
+        .upsert({
           id: user.id,
           artistic_name: nome,
           current_location: cidade,
-          bio: bio,
+          bio,
           avatar_url: avatarUrl,
           is_freelancer: true,
           user_type: 'artist',
-          updated_at: new Date()
+          updated_at: new Date(),
         });
 
       if (profileError) throw profileError;
-
       router.push('/feed');
-      
+
     } catch (err: any) {
       setErrorMsg(err.message);
       setLoading(false);
@@ -86,14 +79,14 @@ export default function ArtistOnboarding() {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Avatar Upload */}
+          {/* Avatar */}
           <div className="flex flex-col items-center mb-6">
             <label className="cursor-pointer group">
               <div className="w-24 h-24 bg-indigo-50 rounded-2xl border-2 border-dashed border-indigo-200 flex items-center justify-center overflow-hidden group-hover:border-indigo-400 transition-all">
                 {file ? (
                   <img src={URL.createObjectURL(file)} alt="Preview" className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-indigo-400 text-xs font-bold text-center p-2">Upload Photo</span>
+                  <span className="text-indigo-400 text-xs font-bold text-center p-2">Upload Foto</span>
                 )}
               </div>
               <input type="file" accept="image/*" className="hidden" onChange={(e) => setFile(e.target.files?.[0] || null)} />
@@ -102,7 +95,7 @@ export default function ArtistOnboarding() {
 
           <div>
             <label className="block text-sm font-bold text-gray-700 ml-1">Nome Artístico</label>
-            <input 
+            <input
               type="text" required value={nome}
               className="w-full p-3 bg-gray-50 border-none rounded-xl mt-1 text-black focus:ring-2 focus:ring-indigo-500 outline-none"
               onChange={(e) => setNome(e.target.value)}
@@ -110,20 +103,21 @@ export default function ArtistOnboarding() {
           </div>
 
           <div>
-            <label className="block text-sm font-bold text-gray-700 ml-1">Localização</label>
-            <select 
+            <label className="block text-sm font-bold text-gray-700 ml-1">Distrito</label>
+            <select
               value={cidade}
               className="w-full p-3 bg-gray-50 border-none rounded-xl mt-1 text-black focus:ring-2 focus:ring-indigo-500 outline-none"
               onChange={(e) => setCidade(e.target.value)}
             >
-              <option value="Lisboa">Lisboa</option>
-              <option value="Porto">Porto</option>
+              {DISTRITOS_PORTUGAL.map(d => (
+                <option key={d} value={d}>{d}</option>
+              ))}
             </select>
           </div>
 
           <div>
             <label className="block text-sm font-bold text-gray-700 ml-1">Bio</label>
-            <textarea 
+            <textarea
               value={bio} required
               placeholder="O teu estilo, experiência, goals..."
               className="w-full p-3 bg-gray-50 border-none rounded-xl mt-1 text-black h-28 focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
@@ -131,7 +125,7 @@ export default function ArtistOnboarding() {
             />
           </div>
 
-          <button 
+          <button
             type="submit" disabled={loading}
             className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black text-lg hover:bg-indigo-700 disabled:bg-gray-300 transition-all"
           >
@@ -139,9 +133,7 @@ export default function ArtistOnboarding() {
           </button>
 
           {errorMsg && (
-            <p className="text-red-500 text-sm font-bold text-center">
-              ❌ {errorMsg}
-            </p>
+            <p className="text-red-500 text-sm font-bold text-center">❌ {errorMsg}</p>
           )}
         </form>
       </div>
