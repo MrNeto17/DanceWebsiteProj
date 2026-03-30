@@ -73,7 +73,8 @@ export default function Navbar() {
 
           {/* Links centrais — desktop */}
           <div className="hidden md:flex items-center gap-6">
-            {navLink('/artists', 'Comunidade')}
+            {navLink('/feed', 'Feed')}
+            {navLink('/artists', 'Artistas')}
             {navLink('/events', 'Eventos')}
           </div>
 

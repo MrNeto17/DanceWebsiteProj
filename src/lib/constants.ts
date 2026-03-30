@@ -1,4 +1,18 @@
 // Todos os distritos de Portugal Continental + Ilhas
+export const ESTILOS_DANCA = [
+  'Breaking',
+  'Popping',
+  'Locking',
+  'House',
+  'Waacking',
+  'Voguing',
+  'Krump',
+  'Hip-Hop',
+  'Dancehall',
+  'Top Styles',
+  'All Styles',
+];
+
 export const DISTRITOS_PORTUGAL = [
   'Aveiro',
   'Beja',

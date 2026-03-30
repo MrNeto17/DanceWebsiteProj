@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import supabase from '../../../lib/supabase';
 import { DISTRITOS_PORTUGAL } from '../../../lib/constants';
+import StylesSelector from '../../../components/StyleSelector';
 import Link from 'next/link';
 
 export default function EditProfilePage() {
@@ -13,6 +14,7 @@ export default function EditProfilePage() {
   const [message, setMessage] = useState('');
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState('');
+  const [styles, setStyles] = useState<string[]>([]);
 
   const [formData, setFormData] = useState({
     full_name: '',
@@ -52,6 +54,7 @@ export default function EditProfilePage() {
           avatar_url:       data.avatar_url       || '',
         });
         setPreviewUrl(data.avatar_url || '');
+        setStyles(data.styles || []);
       }
     } catch (error) {
       console.error('Erro:', error);
@@ -101,7 +104,7 @@ export default function EditProfilePage() {
 
       const { error } = await supabase
         .from('profiles')
-        .update({ ...formData, avatar_url, updated_at: new Date() })
+        .update({ ...formData, avatar_url, styles, updated_at: new Date() })
         .eq('id', user.id);
 
       if (error) throw error;
@@ -213,6 +216,15 @@ export default function EditProfilePage() {
                 rows={4}
                 className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black resize-none"
               />
+            </div>
+
+            {/* Estilos de dança */}
+            <div>
+              <label className="block text-sm font-bold text-gray-700 mb-2">Estilos de Dança</label>
+              <StylesSelector selected={styles} onChange={setStyles} />
+              {styles.length > 0 && (
+                <p className="text-xs text-gray-400 mt-2">{styles.length} estilo(s) selecionado(s)</p>
+              )}
             </div>
 
             {/* Instagram */}

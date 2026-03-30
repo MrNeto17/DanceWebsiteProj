@@ -282,6 +282,22 @@ export default function MyProfilePage() {
           </div>
         )}
 
+        {/* Para artistas — atalho para workshops */}
+        {isArtist && (
+          <div className="bg-indigo-50 border border-indigo-200 rounded-3xl p-6 flex items-center justify-between">
+            <div>
+              <h3 className="font-black text-indigo-900">Os meus Workshops</h3>
+              <p className="text-sm text-indigo-600 mt-1">Gere as tuas ofertas de workshop</p>
+            </div>
+            <Link
+              href="/workshops"
+              className="bg-indigo-600 text-white px-5 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all whitespace-nowrap"
+            >
+              Gerir Workshops
+            </Link>
+          </div>
+        )}
+
         {/* Para organizadores — atalho para criar evento */}
         {isOrganizer && (
           <div className="bg-purple-50 border border-purple-200 rounded-3xl p-6 flex items-center justify-between">

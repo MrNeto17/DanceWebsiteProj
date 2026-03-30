@@ -17,6 +17,18 @@ type Profile = {
   website: string;
   user_type: 'user' | 'artist' | 'organizer';
   created_at: string;
+  styles: string[];
+};
+
+type WorkshopOffer = {
+  id: string;
+  title: string;
+  description: string;
+  price_per_hour: number | null;
+  price_per_workshop: number | null;
+  styles_taught: string[];
+  can_travel: boolean;
+  travel_info: string | null;
 };
 
 type EventRole = {
@@ -55,6 +67,7 @@ export default function ProfilePage() {
   const params = useParams();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [eventRoles, setEventRoles] = useState<EventRole[]>([]);
+  const [workshopOffers, setWorkshopOffers] = useState<WorkshopOffer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -64,7 +77,6 @@ export default function ProfilePage() {
 
   async function loadProfile() {
     try {
-      // Carregar perfil
       const { data: profileData, error: profileError } = await supabase
         .from('profiles')
         .select('*')
@@ -74,25 +86,25 @@ export default function ProfilePage() {
       if (profileError) throw profileError;
       setProfile(profileData);
 
-      // Carregar marcos (event_roles) com info do evento
+      // Carregar marcos
       const { data: rolesData } = await supabase
         .from('event_roles')
         .select(`
-          id,
-          role,
-          notes,
-          event:events (
-            id,
-            title,
-            event_date,
-            location,
-            event_type
-          )
+          id, role, notes,
+          event:events (id, title, event_date, location, event_type)
         `)
         .eq('profile_id', params.id)
         .order('created_at', { ascending: false });
 
       setEventRoles((rolesData as any) || []);
+
+      // Carregar workshop offers
+      const { data: offersData } = await supabase
+        .from('workshop_offers')
+        .select('*')
+        .eq('artist_id', params.id);
+
+      setWorkshopOffers(offersData || []);
 
     } catch (err: any) {
       setError(err.message);
@@ -183,6 +195,20 @@ export default function ProfilePage() {
               </div>
             )}
 
+            {/* Estilos de dança */}
+            {profile.styles?.length > 0 && (
+              <div className="mt-4">
+                <h2 className="text-sm font-bold text-gray-500 uppercase mb-2">Estilos</h2>
+                <div className="flex flex-wrap gap-2">
+                  {profile.styles.map(style => (
+                    <span key={style} className="text-xs font-bold px-3 py-1 rounded-full bg-indigo-100 text-indigo-700">
+                      {style}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Links */}
             <div className="mt-4 space-y-1">
               {profile.instagram_handle && (
@@ -242,7 +268,6 @@ export default function ProfilePage() {
             <div className="space-y-4">
               {eventRoles.map((er) => (
                 <div key={er.id} className="flex items-start gap-4 pb-4 border-b border-gray-50 last:border-0 last:pb-0">
-                  {/* Ícone do role */}
                   <div className="text-2xl mt-0.5">
                     {ROLE_CONFIG[er.role]?.emoji ?? '📌'}
                   </div>
@@ -260,6 +285,52 @@ export default function ProfilePage() {
                         : ''}
                       {er.event?.location ? ` · ${er.event.location}` : ''}
                     </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Workshop Offers */}
+        {workshopOffers.length > 0 && (
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+            <h2 className="text-xl font-black text-gray-900 mb-6">📚 Workshops Disponíveis</h2>
+            <div className="space-y-4">
+              {workshopOffers.map((offer) => (
+                <div key={offer.id} className="border border-gray-100 rounded-2xl p-5 hover:border-indigo-200 transition-all">
+                  <div className="flex items-start justify-between gap-4 flex-wrap">
+                    <div className="flex-1">
+                      <h3 className="font-black text-gray-900 text-lg">{offer.title}</h3>
+                      {offer.description && (
+                        <p className="text-gray-600 text-sm mt-1">{offer.description}</p>
+                      )}
+                      {offer.styles_taught?.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-3">
+                          {offer.styles_taught.map(s => (
+                            <span key={s} className="text-xs font-bold px-2 py-1 rounded-full bg-indigo-100 text-indigo-700">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      {offer.can_travel && (
+                        <p className="text-xs text-gray-500 mt-2">
+                          ✈️ {offer.travel_info || 'Disponível para deslocações'}
+                        </p>
+                      )}
+                    </div>
+                    <div className="text-right shrink-0">
+                      {offer.price_per_hour && (
+                        <p className="font-black text-indigo-600 text-lg">{offer.price_per_hour}€<span className="text-xs font-normal text-gray-400">/hora</span></p>
+                      )}
+                      {offer.price_per_workshop && (
+                        <p className="font-black text-indigo-600 text-lg">{offer.price_per_workshop}€<span className="text-xs font-normal text-gray-400">/workshop</span></p>
+                      )}
+                      {!offer.price_per_hour && !offer.price_per_workshop && (
+                        <p className="text-sm font-bold text-gray-400">Preço a combinar</p>
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
