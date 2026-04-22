@@ -52,7 +52,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-black text-white flex items-center justify-center p-6" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
       <div className="max-w-md w-full border border-white/10 p-10">
         <div className="text-center mb-10">
-          <Link href="/" className="text-xl font-black text-yellow-400 uppercase tracking-widest">DANCEHUB</Link>
+          <Link href="/" className="text-xl font-black text-yellow-400 uppercase tracking-widest">UrbanCypher</Link>
           <div className="w-8 h-0.5 bg-yellow-400 mx-auto my-6" />
           <h2 className="text-3xl font-black text-white uppercase tracking-tight">Criar conta</h2>
           <p className="text-gray-500 text-xs uppercase tracking-widest mt-2">Junta-te à cena</p>

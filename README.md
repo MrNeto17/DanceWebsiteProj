@@ -1,4 +1,4 @@
-# 🕺 DANCEHUB — Urban Dance Community
+# 🕺 UrbanCypher — Urban Dance Community
 
 [![CI](https://github.com/MrNeto17/DanceWebsiteProj/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/MrNeto17/DanceWebsiteProj/actions/workflows/ci.yml)
 [![Vercel](https://img.shields.io/badge/deploy-vercel-black?logo=vercel)](https://dancehub.vercel.app)
@@ -10,7 +10,7 @@
 
 > **"Bringing the Portuguese urban scene together, one step at a time."**
 
-🔗 **Live Demo:** [dancehub.vercel.app](https://dance-website-proj.vercel.app/)
+🔗 **Live Demo:** [UrbanCypher.vercel.app](https://urbancypher.vercel.app/)
 
 ---
 
@@ -18,7 +18,7 @@
 
 ## 📋 About the Project
 
-**DANCEHUB** is a centralized platform for the urban dance community in Portugal. The goal is to connect artists, event organizers, and the general public in a single, intuitive digital ecosystem.
+**UrbanCypher** is a centralized platform for the urban dance community in Portugal. The goal is to connect artists, event organizers, and the general public in a single, intuitive digital ecosystem.
 
 ### 🚩 The Problem
 The Portuguese urban dance scene is fragmented:
@@ -72,7 +72,7 @@ A central hub where:
 
 ## 🎨 Design
 
-DANCEHUB embraces a **raw and direct** visual language, inspired by battle flyers and underground event posters — solid black, electric yellow as the accent, and heavy uppercase typography. The choice is intentional: move away from the generic "SaaS look" and reflect the identity of urban culture.
+UrbanCypher embraces a **raw and direct** visual language, inspired by battle flyers and underground event posters — solid black, electric yellow as the accent, and heavy uppercase typography. The choice is intentional: move away from the generic "SaaS look" and reflect the identity of urban culture.
 
 <!-- MOCKUP: replace with real screenshots -->
 <table>

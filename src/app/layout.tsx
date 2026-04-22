@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'DANCEHUB',
+  title: 'UrbanCypher',
   description: 'Comunidade de dança urbana em Portugal',
 };
 

@@ -6,7 +6,7 @@ export default function LandingPage() {
 
       {/* Navbar */}
       <nav className="flex justify-between items-center px-6 md:px-12 py-6 border-b border-white/10">
-        <span className="text-2xl font-black tracking-widest text-yellow-400 uppercase">DANCEHUB</span>
+        <span className="text-2xl font-black tracking-widest text-yellow-400 uppercase">UrbanCypher</span>
         <div className="flex items-center gap-6">
           <Link href="/login" className="text-sm font-bold text-gray-400 hover:text-white transition-colors uppercase tracking-widest">
             Entrar
@@ -157,7 +157,7 @@ export default function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-white/10 px-6 md:px-12 py-8">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-          <span className="text-yellow-400 font-black text-lg tracking-widest uppercase">DANCEHUB</span>
+          <span className="text-yellow-400 font-black text-lg tracking-widest uppercase">UrbanCypher</span>
           <p className="text-gray-600 text-xs uppercase tracking-widest">
             Feito para a cena urbana portuguesa
           </p>

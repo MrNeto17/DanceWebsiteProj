@@ -67,7 +67,7 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/feed" className="text-xl font-black text-yellow-400 tracking-widest uppercase">
-            DANCEHUB
+            UrbanCypher
           </Link>
 
           {/* Links */}

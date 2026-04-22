@@ -145,7 +145,7 @@ export default function ProfilePage() {
       {/* Navbar */}
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link href="/feed" className="text-2xl font-black text-indigo-900">DANCEHUB</Link>
+          <Link href="/feed" className="text-2xl font-black text-indigo-900">UrbanCypher</Link>
           <div className="flex items-center gap-4">
             <Link href="/feed" className="text-gray-600 hover:text-indigo-600 font-bold">Feed</Link>
             <Link href="/events" className="text-gray-600 hover:text-indigo-600 font-bold">Eventos</Link>
