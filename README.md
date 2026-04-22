@@ -10,7 +10,7 @@
 
 > **"Bringing the Portuguese urban scene together, one step at a time."**
 
-🔗 **Live Demo:** [dancehub.vercel.app](https://dance-website-proj.vercel.app/) *(MOCKUP: replace with your real Vercel URL)*
+🔗 **Live Demo:** [dancehub.vercel.app](https://dance-website-proj.vercel.app/)
 
 ---
 
