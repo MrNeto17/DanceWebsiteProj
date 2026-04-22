@@ -10,14 +10,9 @@
 
 > **"Bringing the Portuguese urban scene together, one step at a time."**
 
-🔗 **Live Demo:** [dancehub.vercel.app](https://dancehub.vercel.app) *(MOCKUP: replace with your real Vercel URL)*
+🔗 **Live Demo:** [dancehub.vercel.app](https://dance-website-proj.vercel.app/) *(MOCKUP: replace with your real Vercel URL)*
 
 ---
-
-<!-- MOCKUP: replace with real landing screenshot/gif -->
-<p align="center">
-  <img src="https://via.placeholder.com/1200x600/000000/FACC15?text=DANCEHUB+—+THE+WHOLE+SCENE+IN+ONE+PLACE" alt="DANCEHUB preview" />
-</p>
 
 ---
 
@@ -57,6 +52,7 @@ A central hub where:
 - [ ] **Registrations and payments** for workshops
 - [ ] **Ratings & reviews**
 - [ ] **Interactive calendar** with filters by city and style
+- [ ] ....
 
 ---
 
@@ -180,8 +176,8 @@ CREATE TABLE profiles (
 
 ## 👥 Author
 
-- **Zé** — *Full-stack Developer & B-boy*
-  - [LinkedIn](https://linkedin.com/in/YOUR-HANDLE) *(MOCKUP)*
+- **Tiago Neto** — *Devops Engineer & B-boy*
+  - [LinkedIn](https://www.linkedin.com/in/tiagomcneto/)
   - [GitHub](https://github.com/MrNeto17)
 
 ---
