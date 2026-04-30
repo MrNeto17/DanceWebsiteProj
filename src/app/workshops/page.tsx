@@ -127,25 +127,39 @@ export default function WorkshopOffersPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600" />
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="animate-spin h-12 w-12 border-t-2 border-b-2 border-yellow-400" />
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-4 py-8 space-y-6">
+  const inputClass = "w-full p-4 bg-white/5 border border-white/10 outline-none focus:border-yellow-400 text-white placeholder:text-gray-600";
+  const labelClass = "block text-[10px] font-black text-yellow-400 uppercase tracking-[0.25em] mb-2";
 
-        <div className="flex items-center justify-between">
+  return (
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+      <div className="max-w-3xl mx-auto px-6 md:px-12 py-12 space-y-6">
+
+        {/* Voltar */}
+        <div>
+          <Link href="/profile/me" className="text-xs font-black uppercase tracking-widest text-gray-500 hover:text-yellow-400 transition-colors">
+            ← Voltar ao perfil
+          </Link>
+        </div>
+
+        {/* Header */}
+        <div className="border border-white/10 p-8 md:p-10 flex flex-col md:flex-row md:items-end md:justify-between gap-6">
           <div>
-            <h1 className="text-3xl font-black text-gray-900">Os meus Workshops</h1>
-            <p className="text-gray-500 mt-1">Gere as tuas ofertas de workshop</p>
+            <div className="text-xs font-black text-yellow-400 uppercase tracking-[0.3em] mb-2">— Área do Artista</div>
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight leading-none">
+              Os meus<br /><span className="text-yellow-400">Workshops.</span>
+            </h1>
+            <p className="text-gray-500 text-xs uppercase tracking-widest mt-3">Gere as tuas ofertas</p>
           </div>
           {!showForm && (
             <button
               onClick={() => setShowForm(true)}
-              className="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition-all"
+              className="bg-yellow-400 text-black px-6 py-3 font-black text-xs uppercase tracking-widest hover:bg-yellow-300 transition-all whitespace-nowrap self-start md:self-auto"
             >
               + Adicionar
             </button>
@@ -154,91 +168,91 @@ export default function WorkshopOffersPage() {
 
         {/* Formulário */}
         {showForm && (
-          <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-            <h2 className="text-xl font-black text-gray-900 mb-6">
+          <div className="border border-white/10 p-8 md:p-10">
+            <h2 className="text-2xl font-black uppercase tracking-tight mb-8">
               {editingId ? 'Editar Workshop' : 'Novo Workshop'}
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-6">
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Título *</label>
+                <label className={labelClass}>Título *</label>
                 <input
                   type="text" required value={formData.title}
                   onChange={e => setFormData(p => ({ ...p, title: e.target.value }))}
                   placeholder="Ex: Workshop de Popping Fundamentals"
-                  className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                  className={inputClass}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-1">Descrição</label>
+                <label className={labelClass}>Descrição</label>
                 <textarea
                   value={formData.description} rows={3}
                   onChange={e => setFormData(p => ({ ...p, description: e.target.value }))}
                   placeholder="O que vais ensinar, nível, duração..."
-                  className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black resize-none"
+                  className={`${inputClass} resize-none`}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-bold text-gray-700 mb-2">Estilos que ensinas</label>
+                <label className={labelClass}>Estilos que ensinas</label>
                 <StylesSelector selected={stylesTaught} onChange={setStylesTaught} />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Preço/hora (€)</label>
+                  <label className={labelClass}>Preço/hora (€)</label>
                   <input
                     type="number" min="0" step="5" value={formData.price_per_hour}
                     onChange={e => setFormData(p => ({ ...p, price_per_hour: e.target.value }))}
                     placeholder="Ex: 50"
-                    className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                    className={inputClass}
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Preço/workshop (€)</label>
+                  <label className={labelClass}>Preço/workshop (€)</label>
                   <input
                     type="number" min="0" step="5" value={formData.price_per_workshop}
                     onChange={e => setFormData(p => ({ ...p, price_per_workshop: e.target.value }))}
                     placeholder="Ex: 150"
-                    className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                    className={inputClass}
                   />
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <label className="flex items-center gap-3 cursor-pointer">
                 <input
-                  type="checkbox" id="can_travel" checked={formData.can_travel}
+                  type="checkbox" checked={formData.can_travel}
                   onChange={e => setFormData(p => ({ ...p, can_travel: e.target.checked }))}
-                  className="w-4 h-4 accent-indigo-600"
+                  className="w-4 h-4 accent-yellow-400"
                 />
-                <label htmlFor="can_travel" className="text-sm font-bold text-gray-700">
+                <span className="text-xs font-black uppercase tracking-widest text-gray-300">
                   Disponível para deslocações
-                </label>
-              </div>
+                </span>
+              </label>
 
               {formData.can_travel && (
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-1">Info de deslocação</label>
+                  <label className={labelClass}>Info de deslocação</label>
                   <input
                     type="text" value={formData.travel_info}
                     onChange={e => setFormData(p => ({ ...p, travel_info: e.target.value }))}
                     placeholder="Ex: Disponível em todo o país"
-                    className="w-full p-3 bg-gray-50 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black"
+                    className={inputClass}
                   />
                 </div>
               )}
 
-              <div className="flex gap-3">
+              <div className="flex gap-3 pt-2">
                 <button
                   type="submit" disabled={saving}
-                  className="flex-1 bg-indigo-600 text-white py-3 rounded-xl font-black hover:bg-indigo-700 disabled:opacity-60 transition-all"
+                  className="flex-1 bg-yellow-400 text-black py-4 font-black text-xs uppercase tracking-widest hover:bg-yellow-300 disabled:opacity-60 transition-all"
                 >
-                  {saving ? 'A guardar...' : editingId ? 'Guardar' : 'Criar Workshop'}
+                  {saving ? 'A guardar...' : editingId ? 'Guardar →' : 'Criar Workshop →'}
                 </button>
                 <button
                   type="button" onClick={resetForm}
-                  className="px-5 bg-gray-100 text-gray-700 py-3 rounded-xl font-bold hover:bg-gray-200"
+                  className="px-6 border border-white/30 text-white py-4 font-black text-xs uppercase tracking-widest hover:border-yellow-400 hover:text-yellow-400 transition-all"
                 >
                   Cancelar
                 </button>
@@ -249,39 +263,56 @@ export default function WorkshopOffersPage() {
 
         {/* Lista de offers */}
         {offers.length === 0 && !showForm ? (
-          <div className="bg-white rounded-3xl p-12 text-center shadow-sm border border-gray-100">
-            <p className="text-4xl mb-4">📚</p>
-            <p className="font-bold text-gray-700">Ainda não tens workshops</p>
-            <p className="text-gray-400 text-sm mt-1">Adiciona a tua primeira oferta</p>
+          <div className="border border-white/10 py-20 text-center">
+            <p className="text-xs font-black text-yellow-400 uppercase tracking-[0.3em] mb-3">— Sem workshops</p>
+            <p className="text-gray-500 text-xs uppercase tracking-widest">Adiciona a tua primeira oferta</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="border border-white/10 divide-y divide-white/10">
             {offers.map(offer => (
-              <div key={offer.id} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div key={offer.id} className="p-6">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <h3 className="font-black text-gray-900">{offer.title}</h3>
-                    {offer.description && <p className="text-gray-500 text-sm mt-1">{offer.description}</p>}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-black text-white uppercase tracking-tight">{offer.title}</h3>
+                    {offer.description && (
+                      <p className="text-gray-400 text-sm mt-2" style={{ fontFamily: 'Arial, sans-serif' }}>
+                        {offer.description}
+                      </p>
+                    )}
                     {offer.styles_taught?.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 mt-2">
+                      <div className="flex flex-wrap gap-1.5 mt-3">
                         {offer.styles_taught.map(s => (
-                          <span key={s} className="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">{s}</span>
+                          <span key={s} className="text-[10px] font-black uppercase tracking-widest px-2 py-1 border border-yellow-400/40 text-yellow-400">
+                            {s}
+                          </span>
                         ))}
                       </div>
                     )}
-                    <div className="flex gap-4 mt-2">
-                      {offer.price_per_hour && <p className="text-sm font-bold text-indigo-600">{offer.price_per_hour}€/hora</p>}
-                      {offer.price_per_workshop && <p className="text-sm font-bold text-indigo-600">{offer.price_per_workshop}€/workshop</p>}
+                    <div className="flex flex-wrap gap-4 mt-3">
+                      {offer.price_per_hour && (
+                        <p className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
+                          — {offer.price_per_hour}€/hora
+                        </p>
+                      )}
+                      {offer.price_per_workshop && (
+                        <p className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
+                          — {offer.price_per_workshop}€/workshop
+                        </p>
+                      )}
                     </div>
                   </div>
-                  <div className="flex gap-2 shrink-0">
-                    <button onClick={() => startEdit(offer)}
-                      className="text-sm font-bold text-gray-500 hover:text-indigo-600 px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-all">
-                      ✏️ Editar
+                  <div className="flex flex-col gap-2 shrink-0">
+                    <button
+                      onClick={() => startEdit(offer)}
+                      className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-yellow-400 transition-colors px-3 py-2 border border-white/20 hover:border-yellow-400"
+                    >
+                      Editar
                     </button>
-                    <button onClick={() => handleDelete(offer.id)}
-                      className="text-sm font-bold text-gray-500 hover:text-red-500 px-3 py-1.5 rounded-lg hover:bg-red-50 transition-all">
-                      🗑️
+                    <button
+                      onClick={() => handleDelete(offer.id)}
+                      className="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-red-400 transition-colors px-3 py-2 border border-white/20 hover:border-red-400"
+                    >
+                      Apagar
                     </button>
                   </div>
                 </div>
@@ -289,10 +320,6 @@ export default function WorkshopOffersPage() {
             ))}
           </div>
         )}
-
-        <Link href="/profile/me" className="block text-center text-sm text-gray-400 hover:text-gray-600 font-bold">
-          ← Voltar ao perfil
-        </Link>
       </div>
     </div>
   );

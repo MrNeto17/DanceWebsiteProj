@@ -26,54 +26,74 @@ const BATTLE_FORMATS = ['1v1', '2v2', '3v3', 'crew', 'solo'];
 function EventCard({ event, past = false }: { event: Event; past?: boolean }) {
   const date = new Date(event.event_date);
   return (
-    <Link href={`/events/${event.id}`} className="block group">
-      <div className={`bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 group-hover:shadow-xl transition-all flex flex-col h-full ${past ? 'opacity-60' : ''}`}>
-        <div className={`px-6 py-4 flex items-center justify-between ${past ? 'bg-gray-400' : 'bg-indigo-600'}`}>
-          <div className="text-white">
-            <p className="text-xs font-bold uppercase opacity-75 capitalize">
+    <Link href={`/events/${event.id}`} className={`block group ${past ? 'opacity-50' : ''}`}>
+      <div className="border border-white/10 hover:border-yellow-400 transition-colors h-full flex flex-col">
+
+        {/* Date strip */}
+        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between">
+          <div>
+            <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest">
               {date.toLocaleDateString('pt-PT', { weekday: 'short' })}
             </p>
-            <p className="text-2xl font-black capitalize">
+            <p className="text-2xl font-black uppercase text-yellow-400 leading-tight">
               {date.toLocaleDateString('pt-PT', { day: '2-digit', month: 'short' })}
             </p>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white/20 text-white">
+          <div className="flex flex-col items-end gap-1.5">
+            <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 border border-yellow-400/40 text-yellow-400">
               {EVENT_TYPE_LABELS[event.event_type] ?? event.event_type}
             </span>
             {event.battle_format && (
-              <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-white/30 text-white">
+              <span className="text-[10px] font-black uppercase tracking-widest px-2 py-1 border border-white/20 text-gray-400">
                 {event.battle_format.toUpperCase()}
               </span>
             )}
           </div>
         </div>
+
+        {/* Body */}
         <div className="p-6 flex flex-col flex-1">
-          <h2 className="text-xl font-black text-gray-900 mb-2">{event.title}</h2>
+          <h2 className="text-xl font-black uppercase tracking-tight text-white mb-3 group-hover:text-yellow-400 transition-colors">
+            {event.title}
+          </h2>
+
           {event.styles?.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mb-3">
+            <div className="flex flex-wrap gap-1.5 mb-4">
               {event.styles.slice(0, 3).map(s => (
-                <span key={s} className="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700">{s}</span>
+                <span key={s} className="text-[10px] font-black uppercase tracking-widest px-2 py-1 border border-white/20 text-gray-400">
+                  {s}
+                </span>
               ))}
-              {event.styles.length > 3 && <span className="text-xs text-gray-400">+{event.styles.length - 3}</span>}
+              {event.styles.length > 3 && (
+                <span className="text-[10px] font-black uppercase tracking-widest text-gray-500 self-center">
+                  +{event.styles.length - 3}
+                </span>
+              )}
             </div>
           )}
+
           {event.description && (
-            <p className="text-gray-500 text-sm line-clamp-2 mb-4">{event.description}</p>
-          )}
-          <div className="mt-auto space-y-1.5">
-            {event.location && <p className="text-sm text-gray-600">📍 {event.location}</p>}
-            <p className="text-sm text-gray-600">
-              🕐 {date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}
+            <p className="text-gray-400 text-sm line-clamp-2 mb-5" style={{ fontFamily: 'Arial, sans-serif' }}>
+              {event.description}
             </p>
-            <p className="text-sm font-bold text-indigo-600">
-              💶 {event.price === 0 ? 'Gratuito' : `${event.price}€`}
+          )}
+
+          <div className="mt-auto space-y-2 pt-4 border-t border-white/10">
+            {event.location && (
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+                — {event.location}
+              </p>
+            )}
+            <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">
+              — {date.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}
+            </p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-yellow-400">
+              — {event.price === 0 ? 'Gratuito' : `${event.price}€`}
             </p>
           </div>
-          <div className={`mt-5 w-full py-3 rounded-xl font-bold text-sm text-center transition-colors ${
-            past ? 'bg-gray-100 text-gray-500' : 'bg-gray-900 text-white group-hover:bg-indigo-600'
-          }`}>
-            {past ? 'Ver Resultados' : 'Ver Detalhes'}
+
+          <div className="mt-5 text-[10px] font-black text-yellow-400 uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+            {past ? 'Ver resultados →' : 'Ver detalhes →'}
           </div>
         </div>
       </div>
@@ -117,76 +137,82 @@ export default function EventsPage() {
       e.location?.toLowerCase().includes(search.toLowerCase())
     );
 
-  // Só mostra filtro de formato quando tipo = battle
-  const showFormatFilter = tipo === 'battle' || (!tipo && activeList.some(e => e.event_type === 'battle'));
+  const inputClass = "w-full p-4 bg-white/5 border border-white/10 outline-none focus:border-yellow-400 text-white placeholder:text-gray-600";
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="min-h-screen bg-black text-white" style={{ fontFamily: 'Arial Black, Arial, sans-serif' }}>
+      <div className="max-w-6xl mx-auto px-6 md:px-12 py-12">
 
-        <div className="mb-6">
-          <h1 className="text-5xl font-black text-indigo-900 mb-1">Eventos</h1>
-          <p className="text-gray-500">Battles, workshops e cyphers por todo o país.</p>
+        {/* Header */}
+        <div className="mb-10">
+          <div className="text-xs font-black text-yellow-400 uppercase tracking-[0.3em] mb-3">— Agenda</div>
+          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tight leading-none">
+            Eventos<span className="text-yellow-400">.</span>
+          </h1>
+          <p className="text-gray-500 text-xs uppercase tracking-widest mt-4">
+            Battles, workshops e cyphers por todo o país
+          </p>
         </div>
 
         {/* Filtros */}
-        <div className="flex flex-col sm:flex-row gap-3 mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
           <input
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Pesquisar evento ou cidade..."
-            className="flex-1 p-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black shadow-sm"
+            className={`lg:col-span-${tipo === 'battle' || tipo === '' ? '1' : '2'} ${inputClass}`}
           />
-          <select value={tipo} onChange={e => { setTipo(e.target.value); setFormato(''); }}
-            className="p-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black shadow-sm">
-            <option value="">Todos os tipos</option>
+          <select value={tipo} onChange={e => { setTipo(e.target.value); setFormato(''); }} className={inputClass}>
+            <option value="" className="bg-black">Todos os tipos</option>
             {Object.entries(EVENT_TYPE_LABELS).map(([v, l]) => (
-              <option key={v} value={v}>{l}</option>
+              <option key={v} value={v} className="bg-black">{l}</option>
             ))}
           </select>
-          <select value={estilo} onChange={e => setEstilo(e.target.value)}
-            className="p-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black shadow-sm">
-            <option value="">Todos os estilos</option>
+          <select value={estilo} onChange={e => setEstilo(e.target.value)} className={inputClass}>
+            <option value="" className="bg-black">Todos os estilos</option>
             {ESTILOS_DANCA.map(e => (
-              <option key={e} value={e}>{e}</option>
+              <option key={e} value={e} className="bg-black">{e}</option>
             ))}
           </select>
-          {/* Formato de battle — só aparece quando relevante */}
           {(tipo === 'battle' || tipo === '') && (
-            <select value={formato} onChange={e => setFormato(e.target.value)}
-              className="p-3 bg-white border border-gray-200 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 text-black shadow-sm">
-              <option value="">Todos os formatos</option>
+            <select value={formato} onChange={e => setFormato(e.target.value)} className={inputClass}>
+              <option value="" className="bg-black">Todos os formatos</option>
               {BATTLE_FORMATS.map(f => (
-                <option key={f} value={f}>{f.toUpperCase()}</option>
+                <option key={f} value={f} className="bg-black">{f.toUpperCase()}</option>
               ))}
             </select>
           )}
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-8">
-          <button onClick={() => setTab('upcoming')}
-            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
-              tab === 'upcoming' ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-            }`}>
+        <div className="flex gap-0 mb-8 border border-white/10">
+          <button
+            onClick={() => setTab('upcoming')}
+            className={`flex-1 px-6 py-4 font-black text-xs uppercase tracking-widest transition-all ${
+              tab === 'upcoming' ? 'bg-yellow-400 text-black' : 'bg-transparent text-gray-400 hover:text-yellow-400'
+            }`}
+          >
             Próximos {upcoming.length > 0 && `(${upcoming.length})`}
           </button>
-          <button onClick={() => setTab('past')}
-            className={`px-6 py-2.5 rounded-full font-bold text-sm transition-all ${
-              tab === 'past' ? 'bg-gray-700 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
-            }`}>
+          <button
+            onClick={() => setTab('past')}
+            className={`flex-1 px-6 py-4 font-black text-xs uppercase tracking-widest transition-all border-l border-white/10 ${
+              tab === 'past' ? 'bg-yellow-400 text-black' : 'bg-transparent text-gray-400 hover:text-yellow-400'
+            }`}
+          >
             Passados {past.length > 0 && `(${past.length})`}
           </button>
         </div>
 
         {loading ? (
-          <div className="text-center py-20 text-indigo-600 animate-pulse font-bold">A carregar eventos...</div>
+          <div className="flex items-center justify-center py-24">
+            <div className="animate-spin h-10 w-10 border-t-2 border-b-2 border-yellow-400" />
+          </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-gray-400">
-            <p className="text-4xl mb-3">🎪</p>
-            <p className="font-bold">Nenhum evento encontrado</p>
-            <p className="text-sm mt-1">Tenta outros filtros</p>
+          <div className="border border-white/10 py-20 text-center">
+            <p className="text-xs font-black text-yellow-400 uppercase tracking-[0.3em] mb-3">— Sem resultados</p>
+            <p className="text-gray-500 text-xs uppercase tracking-widest">Tenta outros filtros</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
